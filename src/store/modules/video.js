@@ -25,8 +25,8 @@ const getters = {
 };
 
 const actions = {
-  getVideoList({commit, dispatch}) {
-    api.getVideoList().then( data => {
+  async getVideoList({commit}) {
+    await api.getVideoList().then( data => {
       commit('getVideoList', data);   
       commit('filterAndOrder')
     }).catch( err => {

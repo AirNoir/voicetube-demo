@@ -3,14 +3,60 @@
   font-family: NotoSansCJKtc-Regular;
 }
 
+#app {
+  margin-top: 0px;
+}
+
 .container {
   width: 100%;
   max-width: 1366px;
   margin: 0 auto;
   padding: 60px;
   box-sizing: border-box;
+  .mobile-top-bar {
+    height: 60px;
+  }
+  .menu {
+    display: none;
+    margin-bottom: 20px;
+    cursor: pointer;
+    position: relative;
+    .bar {
+      width: 30px;
+      height: 5px;
+      margin-bottom: 10px;
+      background-color: #4283E4;
+      position: absolute;
+      transition: .5s ease-in-out;
+      &.bar-1 {
+        top: 10px;
+      }
+      &.bar-2 {
+        top: 20px;
+      }
+      &.bar-3 {
+        top: 30px;
+        transition: 2s ease-in-out;
+      }
+    }
+    &.menu-open {
+      .bar-3 {
+        display: none;
+        animation-delay: -2s;
+      }
+      .bar-1 {
+        transform: rotate(45deg);
+        top: 20px;
+      }
+
+      .bar-2 {
+        transform: rotate(-45deg);
+      }
+    }
+  }
   .top-bar {
     display: flex;
+    
     .top-bar-section {
       display: flex;
       &.length-section {
@@ -39,21 +85,37 @@
   .video-list-wrapper {
     display: flex;
     padding-top: 30px;
-    // flex-wrap: wrap;
-    flex-flow: row wrap;
-    justify-content: space-around;
-    &:after {
-      content: "";
-      margin: 10px;
-      width: 240px;
-      box-sizing: border-box;
+    // // flex-wrap: wrap;
+    // flex-flow: row wrap;
+    // justify-content: space-around;
+
+    // &:after {
+    //   content: "";
+    //   margin: 10px;
+    //   flex: auto;
+    //   box-sizing: border-box;
+    // }
+    ul {
+      display: block;
+      margin: 0 auto;
+      padding: 0;
+      width: 100%;
+      li {
+        list-style: none;
+        width: 25%;
+        // margin-left: 20px;
+        margin-bottom: 20px;
+        float: left;
+        text-align: center;
+      }
     }
+
     .video-card {
       background: #FFFFFF;
       box-shadow: 0 1px 3px 0 rgba(0,0,0,0.30);
       border-radius: 4px;
       overflow: hidden;
-      margin: 10px;
+      margin: 0 auto;
       width: 240px;
       min-width: 240px;
       box-sizing: border-box;
@@ -145,3 +207,117 @@
     transform: scale(1.1);    
   }
 }
+
+
+
+@media only screen {
+  @media (max-width: 1366px) and (min-width: 1024px) { 
+    .container {
+      .video-list-wrapper {
+        ul {
+          li {
+            width: 33%;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen {
+  @media (max-width: 1024px) and (min-width: 768px) { 
+    .container {
+      .video-list-wrapper {
+        ul {
+          li {
+            width: 50%;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen {
+  @media (max-width: 767px) and (min-width: 415px) { 
+    .container {
+      padding: 10px;
+      .top-bar {
+        display: none;
+        &.vertical-menu {
+          display: flex;
+          justify-content: space-evenly;
+          .top-bar-section {
+            flex-direction: column;
+            flex: 1;
+          }
+        }
+        .filter-type-title {
+          border-bottom: 1px solid #ccc;
+          margin-bottom: 5px;
+        }
+      }
+      .menu { 
+        display: block;
+      }
+      .video-list-wrapper {
+        .video-card {
+          width: 480px;
+          .video-img {
+            width: 480px;
+            height: 270px;
+          }
+        }
+        ul {
+          li {
+            width: 100%;
+            margin-bottom: 30px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen {
+  @media (max-width: 414px) {
+    .container {
+      padding: 0px;
+      .top-bar {
+        display: none;
+        &.vertical-menu {
+          display: flex;
+          justify-content: space-evenly;
+          .top-bar-section {
+            flex-direction: column;
+            flex: 1
+          }
+          .filter-type-title {
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 5px;
+          }
+        }
+      }
+      .menu { 
+        display: block;
+      }
+      .video-list-wrapper {
+        .video-card {
+          width: 360px;
+          .video-img {
+            width: 360px;
+            height: 202px;
+          }
+        }
+        ul {
+          li {
+            width: 100%;
+            margin-bottom: 30px;
+          }
+        }
+      }
+    }
+  }
+}
+
+

@@ -1,6 +1,13 @@
 <template>
   <div class="container">
-    <div class="top-bar">
+    <div class="mobile-top-bar">
+      <div class="menu" :class="{ 'menu-open': isMenuOpened }" @click="menuOpen">
+        <div class="bar bar-1"></div>
+        <div class="bar bar-2"></div>
+        <div class="bar bar-3"></div>
+      </div>
+    </div>
+    <div class="top-bar" :class="{ 'vertical-menu': isMenuOpened }">
       <div class="top-bar-section order-section">
         <div class="filter-type-title">排序</div>
         <div :class="{ 'active': activeOrderType === order.type}" @click="orderBy(order.type)"  class="filter-type" v-for="order in orderTabs" :key="order.type">
@@ -20,19 +27,27 @@
       </div>
     </div>
     <hr>
+    <h3 v-show="showList.length === 0">No Data!</h3>
     <div class="video-list-wrapper">
-      <VideoCard :video-data="video" v-for="video in showList" :key="video.id" />
+      <ul>
+        <li v-for="video in showList" :key="video.id" > 
+          <VideoCard :video-data="video" />
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
 import VideoCard from './VideoCard.vue'
-import api from '@/api'
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  
+  data () {
+    return {
+      isMenuOpened: false
+    }
+  },
   computed: {
     ...mapState({
       // videoList: state => state.video.videoList,
@@ -54,28 +69,14 @@ export default {
       setFilter: 'video/setFilter',
 
     }),
+    menuOpen() {
+      this.isMenuOpened = !this.isMenuOpened
+    },
     orderBy(type) {
-      this.activeOrderType = type;
       this.setOrder(type)
-      // this.filterAndOrder({
-      //   orderType: this.activeOrderType ,
-      //   duration: {
-      //     start: this.activeFilterType.start,
-      //     end: this.activeFilterType.end
-      //   }
-      // });
     },
     filterBy(type) {
-      this.activeFilterType = type;
       this.setFilter(type)
-
-      // this.filterAndOrder({
-      //   orderType: this.activeOrderType ,
-      //   duration: {
-      //     start: this.activeFilterType.start,
-      //     end: this.activeFilterType.end
-      //   }
-      // });
     },
     async init () {
       await this.getVideoList();
